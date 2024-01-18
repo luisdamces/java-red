@@ -2,12 +2,13 @@ package org.sfsoft.clientesmtp;
 
 import java.util.Date;
 import java.util.Properties;
+import java.util.Properties;
 
-import javax.mail.Message;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
+
+import javax.mail.*;
+import javax.mail.internet.*;
+
+
 
 /**
  * Ejemplo Java que envía un mensaje de correo a un servidor SMTP
@@ -42,7 +43,7 @@ public class ClienteSMTP {
 	
 	            // Lo enviamos.
 	            Transport t = session.getTransport("smtp");
-	            t.connect("xxxxxxx@gmail.com", "la clave");
+	            t.connect("xxxxxx@gmail.com", "");
 	            t.sendMessage(message, message.getAllRecipients());
 	
 	            // Cierre.
