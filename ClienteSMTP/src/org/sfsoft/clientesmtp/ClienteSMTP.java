@@ -35,8 +35,18 @@ public class ClienteSMTP {
 		
 		try {
 			// Inicializa una sesión
-			Properties props = System.getProperties();
-			props.put("JavaMailSMTP", SERVIDOR);
+			Properties props = new Properties();
+			// Nombre del host de correo, es smtp.gmail.com
+			props.setProperty("mail.smtp.host", "smtp.gmail.com");
+			// TLS si está disponible
+			props.setProperty("mail.smtp.starttls.enable", "true");
+			// Puerto de gmail para envio de correos
+			props.setProperty("mail.smtp.port","587");
+			// Nombre del usuario
+			props.setProperty("mail.smtp.user", "ejemplo@gmail.com");
+			// Si requiere o no usuario y password para conectarse.
+			props.setProperty("mail.smtp.auth", "true");
+			
 			Session sesion = Session.getDefaultInstance(props, null);
 			
 			// Crea el mensaje
@@ -53,9 +63,15 @@ public class ClienteSMTP {
 			
 			// Envía el mensaje
 			System.out.println("Enviando mensaje . . .");
-			Transport.send(mensaje);
-			System.out.println("Mensaje enviado.");
+
+			Transport t = session.getTransport("smtp");
+			//Ahora debemos establecer la conexión, dando el nombre de usuario y password.
+			t.connect("ejemplo@gmail.com","la password");
+			//y ahora simplemente enviamos el mensaje
+			t.sendMessage(mensaje,mensaje.getAllRecipients());
 			
+			System.out.println("Mensaje enviado.");
+			t.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
